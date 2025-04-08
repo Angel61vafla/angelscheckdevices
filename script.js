@@ -1,33 +1,23 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const term = new Terminal();
-    term.open(document.getElementById('terminal'));
-    term.write('AngelsCheckDevices v1.0\n');
-    term.write('Собираю данные...\n');
+body {
+    background-color: #002200; /* тёмно-зелёный фон */
+    margin: 0;
+    padding: 10px;
+}
 
-    Telegram.WebApp.ready();
-    term.write('Подключено к Telegram Web App\n');
+#terminal {
+    width: 100%;
+    height: 150px;
+    background-color: #001100; /* чуть темнее зелёный */
+    border: 1px solid #00ff00; /* ярко-зелёная рамка */
+}
 
-    setTimeout(() => {
-        const info = {
-            platform: Telegram.WebApp.platform || 'Неизвестно',
-            screen: window.screen.width && window.screen.height ? `${window.screen.width}x${window.screen.height}` : 'Неизвестно',
-            cores: navigator.hardwareConcurrency || 'Неизвестно',
-            memory: navigator.deviceMemory ? `${navigator.deviceMemory} GB` : 'Неизвестно'
-        };
+#device-info {
+    padding: 10px;
+}
 
-        term.write('Готово!\n');
-
-        // Проверяем, есть ли данные
-        if (info.platform === 'Неизвестно' && info.screen === 'Неизвестно' && info.cores === 'Неизвестно' && info.memory === 'Неизвестно') {
-            term.write('Ошибка: не удалось собрать данные\n');
-            document.getElementById('specs-output').textContent = 'Не удалось получить характеристики телефона';
-        } else {
-            document.getElementById('specs-output').textContent = `
-Платформа: ${info.platform}
-Экран: ${info.screen}
-Ядер CPU: ${info.cores}
-Память: ${info.memory}
-            `;
-        }
-    }, 1000);
-});
+pre {
+    color: #00ff00; /* ярко-зелёный текст */
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    margin: 0;
+}
