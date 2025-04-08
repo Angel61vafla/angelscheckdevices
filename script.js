@@ -1,23 +1,34 @@
-body {
-    background-color: #002200; /* тёмно-зелёный фон */
-    margin: 0;
-    padding: 10px;
-}
+document.addEventListener('DOMContentLoaded', () => {
+    const term = new Terminal({
+        theme: {
+            foreground: '#00ff00', // зелёный текст в терминале
+            background: '#001100'  // тёмно-зелёный фон
+        }
+    });
+    term.open(document.getElementById('terminal'));
+    term.write('AngelsCheckDevices v1.0\n');
+    term.write('Собираю данные...\n');
 
-#terminal {
-    width: 100%;
-    height: 150px;
-    background-color: #001100; /* чуть темнее зелёный */
-    border: 1px solid #00ff00; /* ярко-зелёная рамка */
-}
+    Telegram.WebApp.ready();
+    term.write('Подключено к Telegram Web App\n');
 
-#device-info {
-    padding: 10px;
-}
+    // Собираем данные
+    const info = {
+        platform: Telegram.WebApp.platform || 'Неизвестно',
+        screen: `${window.screen.width}x${window.screen.height}` || 'Неизвестно',
+        version: Telegram.WebApp.version || 'Неизвестно'
+    };
 
-pre {
-    color: #00ff00; /* ярко-зелёный текст */
-    font-family: 'Courier New', monospace;
-    font-size: 14px;
-    margin: 0;
-}
+    // Выводим в терминал для отладки
+    term.write('Готово!\n');
+    term.write(`Платформа: ${info.platform}\n`);
+    term.write(`Экран: ${info.screen}\n`);
+    term.write(`Версия Telegram: ${info.version}\n`);
+
+    // Обновляем основной вывод
+    document.getElementById('specs-output').textContent = `
+Платформа: ${info.platform}
+Экран: ${info.screen}
+Версия Telegram: ${info.version}
+    `;
+});
